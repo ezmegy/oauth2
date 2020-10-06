@@ -89,6 +89,7 @@ Credentials handleAccessTokenResponse(http.Response response, Uri tokenEndpoint,
         : startTime.add(Duration(seconds: expiresIn) - _expirationGrace);
 
     final userId = parameters['user_id'];
+    final tokenType = parameters['token_type'];
 
     return Credentials(
       parameters['access_token'],
@@ -98,6 +99,7 @@ Credentials handleAccessTokenResponse(http.Response response, Uri tokenEndpoint,
       scopes: scopes,
       expiration: expiration,
       userId: userId,
+      tokenType: tokenType,
     );
   } on FormatException catch (e) {
     throw FormatException('Invalid OAuth response for "$tokenEndpoint": '
