@@ -268,12 +268,15 @@ void main() {
       expiration = DateTime.fromMillisecondsSinceEpoch(
           expiration.millisecondsSinceEpoch);
 
-      var credentials = oauth2.Credentials('access token',
-          refreshToken: 'refresh token',
-          idToken: 'id token',
-          tokenEndpoint: tokenEndpoint,
-          scopes: ['scope1', 'scope2'],
-          expiration: expiration);
+      var credentials = oauth2.Credentials(
+        'access token',
+        refreshToken: 'refresh token',
+        idToken: 'id token',
+        tokenEndpoint: tokenEndpoint,
+        scopes: ['scope1', 'scope2'],
+        expiration: expiration,
+        userId: 'user1234',
+      );
       var reloaded = oauth2.Credentials.fromJson(credentials.toJson());
 
       expect(reloaded.accessToken, equals(credentials.accessToken));
@@ -283,6 +286,7 @@ void main() {
           equals(credentials.tokenEndpoint.toString()));
       expect(reloaded.scopes, equals(credentials.scopes));
       expect(reloaded.expiration, equals(credentials.expiration));
+      expect(reloaded.userId, equals(credentials.userId));
     });
 
     test('should throw a FormatException for invalid JSON', () {

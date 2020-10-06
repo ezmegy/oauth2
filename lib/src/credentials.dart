@@ -72,6 +72,8 @@ class Credentials {
   /// expiration date.
   final DateTime expiration;
 
+  final String userId;
+
   /// The function used to parse parameters from a host's response.
   final GetParameters _getParameters;
 
@@ -112,6 +114,7 @@ class Credentials {
       this.tokenEndpoint,
       Iterable<String> scopes,
       this.expiration,
+      this.userId,
       String delimiter,
       Map<String, dynamic> Function(MediaType mediaType, String body)
           getParameters})
@@ -167,12 +170,17 @@ class Credentials {
       expiration = DateTime.fromMillisecondsSinceEpoch(expiration);
     }
 
-    return Credentials(parsed['accessToken'],
-        refreshToken: parsed['refreshToken'],
-        idToken: parsed['idToken'],
-        tokenEndpoint: tokenEndpoint,
-        scopes: (scopes as List).map((scope) => scope as String),
-        expiration: expiration);
+    final userId = parsed['userId'];
+
+    return Credentials(
+      parsed['accessToken'],
+      refreshToken: parsed['refreshToken'],
+      idToken: parsed['idToken'],
+      tokenEndpoint: tokenEndpoint,
+      scopes: (scopes as List).map((scope) => scope as String),
+      expiration: expiration,
+      userId: userId,
+    );
   }
 
   /// Serializes a set of credentials to JSON.
@@ -187,7 +195,8 @@ class Credentials {
             tokenEndpoint == null ? null : tokenEndpoint.toString(),
         'scopes': scopes,
         'expiration':
-            expiration == null ? null : expiration.millisecondsSinceEpoch
+            expiration == null ? null : expiration.millisecondsSinceEpoch,
+        'userId': userId,
       });
 
   /// Returns a new set of refreshed credentials.

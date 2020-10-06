@@ -5,8 +5,8 @@
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-import 'credentials.dart';
 import 'authorization_exception.dart';
+import 'credentials.dart';
 import 'parameters.dart';
 
 /// The amount of time to add as a "grace period" for credential expiration.
@@ -88,12 +88,17 @@ Credentials handleAccessTokenResponse(http.Response response, Uri tokenEndpoint,
         ? null
         : startTime.add(Duration(seconds: expiresIn) - _expirationGrace);
 
-    return Credentials(parameters['access_token'],
-        refreshToken: parameters['refresh_token'],
-        idToken: parameters['id_token'],
-        tokenEndpoint: tokenEndpoint,
-        scopes: scopes,
-        expiration: expiration);
+    final userId = parameters['user_id'];
+
+    return Credentials(
+      parameters['access_token'],
+      refreshToken: parameters['refresh_token'],
+      idToken: parameters['id_token'],
+      tokenEndpoint: tokenEndpoint,
+      scopes: scopes,
+      expiration: expiration,
+      userId: userId,
+    );
   } on FormatException catch (e) {
     throw FormatException('Invalid OAuth response for "$tokenEndpoint": '
         '${e.message}.\n\n${response.body}');
