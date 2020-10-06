@@ -145,14 +145,14 @@ class Credentials {
     }
 
     validate(parsed is Map, 'was not a JSON map');
-    validate(parsed.containsKey('accessToken'),
+    validate(parsed.containsKey('access_token'),
         'did not contain required field "accessToken"');
     validate(
-        parsed['accessToken'] is String,
+        parsed['access_token'] is String,
         'required field "accessToken" was not a string, was '
         '${parsed["accessToken"]}');
 
-    for (var stringField in ['refreshToken', 'idToken', 'tokenEndpoint']) {
+    for (var stringField in ['refresh_token', 'idToken', 'tokenEndpoint']) {
       var value = parsed[stringField];
       validate(value == null || value is String,
           'field "$stringField" was not a string, was "$value"');
@@ -173,13 +173,13 @@ class Credentials {
       expiration = DateTime.fromMillisecondsSinceEpoch(expiration);
     }
 
-    final userId = parsed['userId'];
+    final userId = parsed['user_id'];
 
-    final tokenType = parsed['tokenType'];
+    final tokenType = parsed['token_type'];
 
     return Credentials(
-      parsed['accessToken'],
-      refreshToken: parsed['refreshToken'],
+      parsed['access_token'],
+      refreshToken: parsed['refresh_token'],
       idToken: parsed['idToken'],
       tokenEndpoint: tokenEndpoint,
       scopes: (scopes as List).map((scope) => scope as String),
@@ -194,16 +194,16 @@ class Credentials {
   /// Nothing is guaranteed about the output except that it's valid JSON and
   /// compatible with [Credentials.toJson].
   String toJson() => jsonEncode({
-        'accessToken': accessToken,
-        'refreshToken': refreshToken,
+        'access_token': accessToken,
+        'refresh_token': refreshToken,
         'idToken': idToken,
         'tokenEndpoint':
             tokenEndpoint == null ? null : tokenEndpoint.toString(),
         'scopes': scopes,
         'expiration':
             expiration == null ? null : expiration.millisecondsSinceEpoch,
-        'userId': userId,
-        'tokenType': tokenType,
+        'user_id': userId,
+        'token_type': tokenType,
       });
 
   /// Returns a new set of refreshed credentials.

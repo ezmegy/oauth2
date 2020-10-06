@@ -305,31 +305,31 @@ void main() {
     });
 
     test('should throw a FormatException if accessToken is not a string', () {
-      expect(() => fromMap({'accessToken': 12}), throwsFormatException);
+      expect(() => fromMap({'access_token': 12}), throwsFormatException);
     });
 
     test('should throw a FormatException if refreshToken is not a string', () {
-      expect(() => fromMap({'accessToken': 'foo', 'refreshToken': 12}),
+      expect(() => fromMap({'access_token': 'foo', 'refresh_token': 12}),
           throwsFormatException);
     });
 
     test('should throw a FormatException if idToken is not a string', () {
-      expect(() => fromMap({'accessToken': 'foo', 'idToken': 12}),
+      expect(() => fromMap({'access_token': 'foo', 'idToken': 12}),
           throwsFormatException);
     });
 
     test('should throw a FormatException if tokenEndpoint is not a string', () {
-      expect(() => fromMap({'accessToken': 'foo', 'tokenEndpoint': 12}),
+      expect(() => fromMap({'access_token': 'foo', 'tokenEndpoint': 12}),
           throwsFormatException);
     });
 
     test('should throw a FormatException if scopes is not a list', () {
-      expect(() => fromMap({'accessToken': 'foo', 'scopes': 12}),
+      expect(() => fromMap({'access_token': 'foo', 'scopes': 12}),
           throwsFormatException);
     });
 
     test('should throw a FormatException if expiration is not an int', () {
-      expect(() => fromMap({'accessToken': 'foo', 'expiration': '12'}),
+      expect(() => fromMap({'access_token': 'foo', 'expiration': '12'}),
           throwsFormatException);
     });
   });
