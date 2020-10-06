@@ -276,6 +276,7 @@ void main() {
         scopes: ['scope1', 'scope2'],
         expiration: expiration,
         userId: 'user1234',
+        tokenType: 'Bearer',
       );
       var reloaded = oauth2.Credentials.fromJson(credentials.toJson());
 
@@ -287,6 +288,7 @@ void main() {
       expect(reloaded.scopes, equals(credentials.scopes));
       expect(reloaded.expiration, equals(credentials.expiration));
       expect(reloaded.userId, equals(credentials.userId));
+      expect(reloaded.tokenType, equals(credentials.tokenType));
     });
 
     test('should throw a FormatException for invalid JSON', () {

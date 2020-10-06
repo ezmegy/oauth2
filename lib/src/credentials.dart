@@ -74,6 +74,8 @@ class Credentials {
 
   final String userId;
 
+  final String tokenType;
+
   /// The function used to parse parameters from a host's response.
   final GetParameters _getParameters;
 
@@ -115,6 +117,7 @@ class Credentials {
       Iterable<String> scopes,
       this.expiration,
       this.userId,
+      this.tokenType,
       String delimiter,
       Map<String, dynamic> Function(MediaType mediaType, String body)
           getParameters})
@@ -172,6 +175,8 @@ class Credentials {
 
     final userId = parsed['userId'];
 
+    final tokenType = parsed['tokenType'];
+
     return Credentials(
       parsed['accessToken'],
       refreshToken: parsed['refreshToken'],
@@ -180,6 +185,7 @@ class Credentials {
       scopes: (scopes as List).map((scope) => scope as String),
       expiration: expiration,
       userId: userId,
+      tokenType: tokenType,
     );
   }
 
@@ -197,6 +203,7 @@ class Credentials {
         'expiration':
             expiration == null ? null : expiration.millisecondsSinceEpoch,
         'userId': userId,
+        'tokenType': tokenType,
       });
 
   /// Returns a new set of refreshed credentials.
