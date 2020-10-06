@@ -193,18 +193,29 @@ class Credentials {
   ///
   /// Nothing is guaranteed about the output except that it's valid JSON and
   /// compatible with [Credentials.toJson].
-  String toJson() => jsonEncode({
-        'access_token': accessToken,
-        'refresh_token': refreshToken,
-        'idToken': idToken,
-        'tokenEndpoint':
-            tokenEndpoint == null ? null : tokenEndpoint.toString(),
-        'scopes': scopes,
-        'expiration':
-            expiration == null ? null : expiration.millisecondsSinceEpoch,
-        'user_id': userId,
-        'token_type': tokenType,
-      });
+  String toJson() {
+    // add formatted scope and expireDate fields for FitBitAPI handler
+    var expireDate = expiration.toIso8601String();
+
+    var scope = '';
+    // result in the encoded json would look like i.e. 'profile activity heartrate weight sleep',
+    // instead of ["sleep","activity","heartrate","profile","weight"]
+    scopes.forEach((s) => scope += '$s ');
+
+    return jsonEncode({
+      'access_token': accessToken,
+      'refresh_token': refreshToken,
+      'idToken': idToken,
+      'tokenEndpoint': tokenEndpoint == null ? null : tokenEndpoint.toString(),
+      'scopes': scopes,
+      'scope': scope,
+      'expiration':
+          expiration == null ? null : expiration.millisecondsSinceEpoch,
+      'expireDate': expireDate,
+      'user_id': userId,
+      'token_type': tokenType,
+    });
+  }
 
   /// Returns a new set of refreshed credentials.
   ///
