@@ -76,7 +76,8 @@ void main() async {
   var client = await createClient();
 
   // Once you have a Client, you can use it just like any other HTTP client.
-  print(await client.read('http://example.com/protected-resources.txt'));
+  print(await client
+      .read(Uri(path: 'http://example.com/protected-resources.txt')));
 
   // Once we're done with the client, save the credentials file. This ensures
   // that if the credentials were automatically refreshed while using the
